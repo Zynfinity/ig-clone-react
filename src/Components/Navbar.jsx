@@ -67,13 +67,14 @@ const Navbar = (props) => {
                     <div className='text-white mt-16 bg-gray-700 w-full rounded-xl p-2 max-w-xs mx-auto lg:max-w-md'>
                         <h3 className='font-semibold text-xs text-gray-300'>Hasil Pencarian ...</h3>
                         <div className='mt-4'>
-                            {result.map((item, index) => {
+                            {result.map(({user_metadata: item}, index) => {
+                                console.log(item)
                                 return (
                                     <Link to={`/profile/${item.id}`} key={index} className='flex px-1 py-4 gap-4 border-b border-gray-600'>
-                                        <img src={`${import.meta.env.VITE_REACT_API_URL}/proxy?url=${item.user_metadata.avatar_url}`} alt="" className='w-10 rounded-full' />
+                                        <img src={`${import.meta.env.VITE_REACT_API_URL}/proxy?url=${item.avatar_url}`} alt="" className='w-10 rounded-full' />
                                         <div className='flex flex-col gap-y-1'>
-                                            <h3 className='font-semibold text-sm'>{item.user_metadata.full_name}</h3>
-                                            <p className='text-xs'>10k Followers</p>
+                                            <h3 className='font-semibold text-sm'>{item.full_name}</h3>
+                                            <p className='text-xs'>{item?.followers.length} Followers</p>
                                         </div>
                                     </Link>
                                 )

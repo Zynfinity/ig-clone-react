@@ -21,21 +21,22 @@ const Home = (props) => {
     useEffect(() => {
         const fetchPost = () => {
             axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/post/followed`, { user_id: user.id }).then(({ data }) => {
-                setPosts(shuffleArray(data));
+                if(data.length > 0) setPosts(shuffleArray(data));
                 setIsLoading(false);
             }).catch = (e) => {
                 console.log(e);
             }
         }
-        // const sugges = () => {
-        //     axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/user/all`, {user_id: me.id}).then(({ data }) => {
-        //         setSuggested(data);
-        //     }).catch = (e) => {
-        //         console.log(e);
-        //     }
-        // }
+        const sugges = () => {
+            axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/user/all`, {user_id: user.id}).then(({ data }) => {
+                console.log(data);
+                setSuggested(data);
+            }).catch = (e) => {
+                console.log(e);
+            }
+        }
         fetchPost();
-        // sugges();
+        sugges();
     },[!posts])
     // if(isLoading) return <Loading/>
     return (
@@ -87,15 +88,16 @@ const Home = (props) => {
                         })}
                         <div className='px-4 mt-4 md:hidden'>
                             {(!posts && suggested) && <p className='text-sm text-white mb-4'>Orang yang mungkin anda kenal</p>}
-                            {(!posts && suggested) && suggested.map((item, index) => {
-                                if (!item.isFollowed) {
+                            {(!posts && suggested) && suggested.map(({user_metadata:item}, index) => {
+                                if (!item.isFollowing) {
+                                    console.log(item);
                                     return (
                                         <Link to={`/profile/${item.id}`} key={index} className="flex items-center gap-2 mb-4 cursor-pointer">
-                                            <img src={item.imageUrl} alt="" className='w-12 rounded-full' />
+                                            <img src={item.avatar_url} alt="" className='w-12 rounded-full' />
                                             <div className='w-full flex justify-between'>
                                                 <div>
-                                                    <h3 className='font-semibold text-sm text-white'>{item.username}</h3>
-                                                    <p className='text-sm text-white'>{item.fullName}</p>
+                                                    <h3 className='font-semibold text-sm text-white'>{item.user_name}</h3>
+                                                    <p className='text-sm text-white'>{item.full_name}</p>
                                                 </div>
                                                 {/* <button className='font-semibold text-sm text-blue-300'>Follow</button> */}
                                             </div>
