@@ -4,6 +4,7 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import Loading from '../Components/Loading';
 import axios from 'axios';
 import { useUser } from '../Components/UserContext';
+import { supabase } from '../Utils/supabaseClient';
 
 const Profile = (props) => {
     const { id } = useParams();
