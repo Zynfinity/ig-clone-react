@@ -22,7 +22,6 @@ const Profile = (props) => {
             setLoading(true);
             try {
                 const { data } = await axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/user/find`, { user_id: id ? id : user.id, my_id: user.id }, {signal});
-                console.log(data);
                 setUserData(data);
             } catch (e) {
                 setUserData('');
