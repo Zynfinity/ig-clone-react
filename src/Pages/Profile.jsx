@@ -105,7 +105,7 @@ const createRoom = () => {
                                 </div>
                                 <div className='flex flex-col md:h-fit'>
                                     <div className='flex flex-col gap-4 md:flex-row'>
-                                        <h3 className='text-lg text-white flex gap-2'>{User ? User.user_name : 'Account Not Found'} <img src="/icons/Verified.svg" alt="" className='w-4' /></h3>
+                                        <h3 className='text-lg text-white flex gap-2'>{User && User.full_name ? User.user_name || User.full_name : 'Account Not Found'} <img src="/icons/Verified.svg" alt="" className='w-4' /></h3>
                                         {id && <div className='flex gap-x-4'>
                                             <button onClick={() => follow()} id='follow-button' className='font-semibold text-sm text-white tracking-wide w-fit bg-gray-600 py-1 px-2 rounded-md'>{User?.isFollowing ? 'Followed' : 'Follow'}</button>
                                             <button onClick={() => createRoom()} className='font-semibold text-sm text-white tracking-wide w-fit bg-gray-600 py-1 px-2 rounded-md'>Message</button>
