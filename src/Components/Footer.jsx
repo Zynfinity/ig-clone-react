@@ -58,12 +58,12 @@ const Footer = (props) => {
         })
         fileInput.click();
     }
-
+    console.log(location.pathname.match('/chats'));
     return (
         <>
             {/* <Alert pesan={'asu'} /> */}
             {post && <NewPost setPostOff={setPostOff} preview={preview} image={image} user={user} />}
-            <footer className={`${id && idpost ? 'hidden lg:block' : ''} fixed bottom-0 w-full bg-dark md:left-0 md:top-0 md:w-fit md:border-r md:border-gray-600 ${location.pathname == '/chats' || location.pathname.startsWith('/chat') ? 'hidden lg:block' : 'xl:w-full xl:max-w-64'}`}>
+            <footer className={`${id && idpost ? 'hidden lg:block' : ''} fixed bottom-0 w-full bg-dark md:left-0 md:top-0 md:w-fit md:border-r md:border-gray-600 ${location.pathname.match('/chat/') ? 'hidden lg:block' : (location.pathname == '/chats' ? 'lg:block' : 'xl:w-full xl:max-w-64')}`}>
                 <div className="md:h-full">
                     <div className="h-full w-full p-1">
                         <div className='hidden mt-8 mb-14 md:block xl:flex xl:gap-x-2 xl:px-4'>
