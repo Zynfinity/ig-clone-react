@@ -9,20 +9,20 @@ const Chat = () => {
     const { user } = useUser();
     const messagesEndRef = useRef(null);
     const location = useLocation();
-    const [messages, setMessages] = useState();
+    const [messages, setMessages] = useState([]);
     const [textMsg, setTextMsg] = useState();
     const [partnerId, setPartnerId] = useState();
     const [partner, setPartner] = useState();
 
     const loadMsg = () => {
         axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/chat`, { user_id: user.id, room_id: id }).then(({ data }) => {
-            if (!data.status) {
+            if (!Array.isArray(data) && !data.status) {
                 setPartnerId(data.partnerid);
             } else {
                 setPartnerId(data[0].sender_id == user.id ? data[0].receiver_id : data[0].sender_id);
                 setMessages(data);
             }
-            axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/user/find`, { user_id: !data.status ? data.partnerid : data[0].sender_id == user.id ? data[0].receiver_id : data[0].sender_id, my_id: user.id }).then(({ data: data2 }) => {
+            axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/user/find`, { user_id: !Array.isArray(data) && !data.status ? data.partnerid : data[0].sender_id == user.id ? data[0].receiver_id : data[0].sender_id, my_id: user.id }).then(({ data: data2 }) => {
                 setPartner(data2);
             }).catch((e) => {
                 console.log(e);
@@ -38,11 +38,12 @@ const Chat = () => {
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chats' }, (payload) => {
                 if (payload.new.room_id != id) return
                 payload.new['isFromMe'] = payload.new.sender_id == user.id ? true : false;
+                console.log(messages.length);
                 setMessages(prevData => [...prevData, payload.new]);
                 messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             })
             .subscribe();
-    }, [id]);
+    }, [id || !messages]);
     const sendMsg = () => {
         axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/chat/send`, { user_id: user.id, partner_id: partnerId, room_id: id, text: textMsg }).then(({ data }) => {
         }).catch((e) => {
@@ -106,7 +107,7 @@ const Chat = () => {
                     </div>
                 </nav>
                 <div className='flex w-full'>
-                    <div className='pt-12 pb-12'>
+                    <div className='pt-12 pb-12 w-full'>
                         {messages && messages.map((item, index) => {
                             if (item.isFromMe) return (
                                 <div key={index} className="chat chat-end">
