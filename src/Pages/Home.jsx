@@ -29,7 +29,6 @@ const Home = (props) => {
         }
         const sugges = () => {
             axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/user/all`, {user_id: user.id}).then(({ data }) => {
-                console.log(data);
                 setSuggested(data);
             }).catch = (e) => {
                 console.log(e);
@@ -90,7 +89,6 @@ const Home = (props) => {
                             {(!posts && suggested) && <p className='text-sm text-white mb-4'>Orang yang mungkin anda kenal</p>}
                             {(!posts && suggested) && suggested.map(({user_metadata:item}, index) => {
                                 if (!item.isFollowing) {
-                                    console.log(item);
                                     return (
                                         <Link to={`/profile/${item.id}`} key={index} className="flex items-center gap-2 mb-4 cursor-pointer">
                                             <img src={item.avatar_url} alt="" className='w-12 rounded-full' />

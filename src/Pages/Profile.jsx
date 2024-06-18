@@ -10,7 +10,7 @@ const Profile = (props) => {
     const {user, loading: load} = useUser();
     const Navigate = useNavigate();
     const [userData, setUserData] = useState({});
-    const {user_metadata: User} = userData;
+    const User = userData;
     const [loading, setLoading] = useState(false);
     document.title = props.title;
     useEffect(() => {
@@ -21,6 +21,7 @@ const Profile = (props) => {
             setLoading(true);
             try {
                 const { data } = await axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/user/find`, { user_id: id ? id : user.id, my_id: user.id }, {signal});
+                console.log(data);
                 setUserData(data);
             } catch (e) {
                 setUserData('');
@@ -65,7 +66,7 @@ const createRoom = () => {
     }
     const handleLogout = async () => {
         try {
-            signOut();
+            await supabase.auth.signOut();
             Navigate('/login');
         } catch (e) {
             console.log(e)

@@ -2,7 +2,7 @@ import React from 'react'
 import { useUser } from './UserContext';
 
 const Story = ({ me }) => {
-    const {user:{user_metadata: User}} = useUser();
+    const {user:User} = useUser();
     return (
         <div className='pt-20 bg-dark py-2 md:pt-20'>
             <div className="">

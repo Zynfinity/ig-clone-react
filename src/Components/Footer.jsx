@@ -11,7 +11,7 @@ import { supabase } from '../Utils/supabaseClient';
 
 const Footer = (props) => {
     const {user, id, idpost} = props;
-    const {user_metadata: User} = user;
+    const User = user;
     const navigate = useNavigate();
     const location = useLocation();
     const [preview, setPreview] = useState(null);
@@ -58,7 +58,6 @@ const Footer = (props) => {
         })
         fileInput.click();
     }
-    console.log(location.pathname.match('/chats'));
     return (
         <>
             {/* <Alert pesan={'asu'} /> */}

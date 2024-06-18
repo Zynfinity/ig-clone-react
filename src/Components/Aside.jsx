@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 const Aside = (props) => {
     const { user } = props;
-    const {user_metadata: User} = user;
+    const User = user;
     const [suggested, setSuggested] = useState();
     useEffect(() => {
         const suggest = () => {
