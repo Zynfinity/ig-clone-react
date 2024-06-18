@@ -37,7 +37,7 @@ const Chats = () => {
                                     <img src={other.avatar_url} alt="" className='w-10 rounded-full'/>
                                     <div className='w-56'>
                                         <p className='font-semibold text-white text-sm'>{other.full_name}</p>
-                                        <p className='font-semibold text-gray-400 text-sm truncate ...'>{item.lastmsg[0].sender_id == user.id ? 'You : ' : ''}{item.lastmsg[0].body}</p>
+                                        <p className='font-semibold text-gray-400 text-sm truncate ...'>{item.lastmsg && item.lastmsg[0].sender_id == user.id ? 'You : ' : ''}{item.lastmsg && item.lastmsg[0].body}</p>
                                     </div>
                                 </Link>
                             )

@@ -13,14 +13,17 @@ const Chat = () => {
     const [textMsg, setTextMsg] = useState();
     const [partnerId, setPartnerId] = useState();
     const [partner, setPartner] = useState();
-    
+
     const loadMsg = () => {
         axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/chat`, { user_id: user.id, room_id: id }).then(({ data }) => {
-            setPartnerId(data[0].sender_id == user.id ? data[0].receiver_id : data[0].sender_id);
-            setMessages(data);
-            axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/user/find`, {user_id: data[0].sender_id == user.id ? data[0].receiver_id : data[0].sender_id, my_id: user.id}).then(({data: data2}) => {
+            if (!data.status) {
+                setPartnerId(data.partnerid);
+            } else {
+                setPartnerId(data[0].sender_id == user.id ? data[0].receiver_id : data[0].sender_id);
+                setMessages(data);
+            }
+            axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/user/find`, { user_id: !data.status ? data.partnerid : data[0].sender_id == user.id ? data[0].receiver_id : data[0].sender_id, my_id: user.id }).then(({ data: data2 }) => {
                 setPartner(data2);
-                console.log(data2);
             }).catch((e) => {
                 console.log(e);
             })
@@ -47,7 +50,6 @@ const Chat = () => {
         });
         const newMsg = document.getElementById('new-msg');
         const newMsg2 = document.getElementById('new-msg2');
-        console.log(newMsg2);
         newMsg.value = '';
         newMsg2.value = '';
     }

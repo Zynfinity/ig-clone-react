@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { act, useEffect, useRef, useState } from 'react'
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
 import { useNavigate, useParams } from 'react-router-dom';
@@ -60,6 +60,15 @@ const Post = (props) => {
         })
     }
 
+    const like = () => {
+        const tempost = {...post};
+        axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/like`, {user_id: user.id, post_id: idpost, action: tempost.isLiked ? 'unlike' : 'like'}).then(({data}) => {
+            tempost.isLiked ? tempost.isLiked = false : tempost.isLiked = true
+            setPost(tempost);
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
 
     if (isLoading || post == undefined) return <Loading />
     const { users: { user_metadata: User } } = post;
@@ -99,7 +108,7 @@ const Post = (props) => {
                     <div className='container mx-auto md:w-1/2'>
                         <div className='flex justify-between py-2'>
                             <div className='inline-flex gap-x-4'>
-                                <img src={`${post.isLiked ? '/icons/liked.svg' : '/icons/Notifications.svg'}`} alt="" />
+                                <img onClick={() => like()} src={`${post.isLiked ? '/icons/liked.svg' : '/icons/Notifications.svg'}`} alt="" />
                                 <img src="/icons/Comment.svg" alt="" />
                                 <img src="/icons/Share.svg" alt="" />
                             </div>
@@ -199,7 +208,7 @@ const Post = (props) => {
                             <div className='bg-dark absolute flex flex-col justify-center gap-2 w-full max-w-lg bottom-0 p-2'>
                                 <div className='flex w-full justify-between'>
                                     <div className='inline-flex gap-x-4'>
-                                        <img src={`${post.isLiked ? '/icons/liked.svg' : '/icons/Notifications.svg'}`} alt="" />
+                                        <img id="like" onClick={() => like()} src={`${post.isLiked ? '/icons/liked.svg' : '/icons/Notifications.svg'}`} alt="" />
                                         <img src="/icons/Comment.svg" alt="" />
                                         <img src="/icons/Share.svg" alt="" />
                                     </div>

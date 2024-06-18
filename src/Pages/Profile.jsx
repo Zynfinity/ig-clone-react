@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Footer from '../Components/Footer';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import Loading from '../Components/Loading';
 import axios from 'axios';
 import { useUser } from '../Components/UserContext';
@@ -8,6 +8,7 @@ import { useUser } from '../Components/UserContext';
 const Profile = (props) => {
     const { id } = useParams();
     const {user, loading: load} = useUser();
+    const Navigate = useNavigate();
     const [userData, setUserData] = useState({});
     const {user_metadata: User} = userData;
     const [loading, setLoading] = useState(false);
@@ -46,7 +47,17 @@ const Profile = (props) => {
         }).catch = (e) => {
             console.log(e);
         }
-    }
+    };
+
+const createRoom = () => {
+    axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/chat/new`, {user1: user.id, user2:id}).then(({data}) => {
+        console.log(data);
+        if(data.id) Navigate(`/chat/${data.id}`);
+    }).catch((e) => {
+        console.log(e);
+    })
+}
+
     if (loading || load || !User?.avatar_url) return <Loading />
     const showMore = () => {
         const menu = document.getElementById('menu2');
@@ -98,7 +109,7 @@ const Profile = (props) => {
                                         <h3 className='text-lg text-white flex gap-2'>{User ? User.user_name : 'Account Not Found'} <img src="/icons/Verified.svg" alt="" className='w-4' /></h3>
                                         {id && <div className='flex gap-x-4'>
                                             <button onClick={() => follow()} id='follow-button' className='font-semibold text-sm text-white tracking-wide w-fit bg-gray-600 py-1 px-2 rounded-md'>{User?.isFollowing ? 'Followed' : 'Follow'}</button>
-                                            <button className='font-semibold text-sm text-white tracking-wide w-fit bg-gray-600 py-1 px-2 rounded-md'>Message</button>
+                                            <button onClick={() => createRoom()} className='font-semibold text-sm text-white tracking-wide w-fit bg-gray-600 py-1 px-2 rounded-md'>Message</button>
                                         </div>}
                                     </div>
                                     <div className='hidden gap-6 max-w-lg mx-auto mt-4 w-full md:flex'>
