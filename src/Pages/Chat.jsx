@@ -64,7 +64,7 @@ const Chat = () => {
                                 <img src="/icons/arrow.svg" alt="" className="-rotate-90 w-5 mr-2" />
                             </Link>
                             <div className="absolute left-0 w-full flex-grow text-center">
-                                <h1 className="text-md text-white ">{partner?.user_metadata.full_name}</h1>
+                                <h1 className="text-md text-white ">{partner?.full_name}</h1>
                             </div>
                             {/* <img onClick={showMore} src="/icons/Settings.svg" alt="" className='absolute right-2 cursor-pointer' /> */}
                         </div>
@@ -100,7 +100,7 @@ const Chat = () => {
                                 <img src="/icons/arrow.svg" alt="" className="-rotate-90 w-5 mr-2" />
                             </Link>
                             <div className="absolute left-0 w-full flex-grow text-center">
-                                <h1 className="text-md text-white ">{partner?.user_metadata.full_name}</h1>
+                                <h1 className="text-md text-white ">{partner?.full_name}</h1>
                             </div>
                             {/* <img onClick={showMore} src="/icons/Settings.svg" alt="" className='absolute right-2 cursor-pointer' /> */}
                         </div>
