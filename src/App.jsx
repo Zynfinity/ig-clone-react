@@ -49,8 +49,6 @@ export default function App() {
     const channel = supabase
             .channel('public:messages')
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chats' }, (payload) => {
-              console.log(payload.new);
-              console.log(user.id);
                 if (payload.new.receiver_id != user?.id) return
                 sendNotification(payload.new.body);
             })

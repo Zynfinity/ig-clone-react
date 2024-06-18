@@ -32,7 +32,6 @@ const Navbar = (props) => {
 
     const handleSearch = (query) => {
         if (!query) return setResult([]);
-        console.log(users)
         const list = users.filter(res => (res.user_metadata.user_name && res.user_metadata.user_name.startsWith(query)) || (res.user_metadata.full_name && res.user_metadata.full_name.startsWith(query)));
         setResult(list);
     };

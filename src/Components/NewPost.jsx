@@ -4,7 +4,6 @@ import { Navigate } from 'react-router-dom';
 import Alert from './Alert';
 
 const NewPost = (props) => {
-    console.log(props.user)
     const [posts, setPosts] = useState([]);
     const [postId, setPostId] = useState('');
     const [caption, setCaption] = useState('');

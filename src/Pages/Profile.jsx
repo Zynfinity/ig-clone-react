@@ -51,7 +51,6 @@ const Profile = (props) => {
 
 const createRoom = () => {
     axios.post(`${import.meta.env.VITE_REACT_API_URL}/api/chat/new`, {user1: user.id, user2:id}).then(({data}) => {
-        console.log(data);
         if(data.id) Navigate(`/chat/${data.id}`);
     }).catch((e) => {
         console.log(e);
@@ -160,11 +159,11 @@ const createRoom = () => {
                                         <div className='hidden md:flex absolute items-center justify-center gap-x-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
                                             <div className='flex gap-x-1'>
                                                 <img src="/icons/Notifications.svg" alt="" className='white-icon' />
-                                                <p className='font-semibold'>200</p>
+                                                <p className='font-semibold'>{item.likes.length}</p>
                                             </div>
                                             <div className='flex gap-x-1'>
                                                 <img src="/icons/Comment.svg" alt="" className='white-icon' />
-                                                <p className='font-semibold'>100</p>
+                                                <p className='font-semibold'>{item.comments.length}</p>
                                             </div>
                                         </div>
                                     </Link>
